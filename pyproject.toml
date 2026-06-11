@@ -1,0 +1,12 @@
+[project]
+name = "oauth-kid-test"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "atproto-oauth-py>=0.1.0",
+    "authlib>=1.7.2",
+    "cryptography>=48.0.1",
+    "requests>=2.34.2",
+]
