@@ -12,17 +12,18 @@ uv sync
 
 ## Run
 
+The app listens on port 9999 and must be reachable by the PDS at `https://<CLIENT_HOST>/`.
+
+### With a domain
+
 ```bash
-CLIENT_HOST=oauth-test.glados.computer uv run python3 app.py
+CLIENT_HOST=oauth-test.mycooldomain.at PDS_HOST=mycoolpds.at uv run python3 app.py
 ```
 
-Replace `CLIENT_HOST` with your domain. The app listens on port 9999 and must be reachable by the PDS at `https://<CLIENT_HOST>/`.
+### With ngrok (easiest)
 
-Keys are auto-generated in `keys/` on first run and reused on subsequent runs.
+```bash
+ngrok http 9999
+CLIENT_HOST=<ngrok-domain> PDS_HOST=mycoolpds.at uv run python3 app.py
+```
 
-## How it works
-
-1. Exposes a client metadata endpoint and JWKS with two keys (key-1 at index 0, key-2 at index 1)
-2. Signs `client_assertion` with key-2, putting `kid: "key-2"` in the JWT header
-3. If the PDS looks up by `kid` → finds key-2 → signature verified → PASS
-4. If the PDS grabs `keys[0]` → gets key-1 → wrong key → FAIL
